@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaDeBatalha.GUI", "ArenaDeBatalha.GUI\ArenaDeBatalha.GUI.csproj", "{F825982B-C9F3-4151-AB22-955DC42FEBBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArenaDeBatalha.GameObjects", "ArenaDeBatalha.ObjetosDoJogo\ArenaDeBatalha.GameObjects.csproj", "{0C5E13B9-363B-4847-913E-5EE77E96E642}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "font", "font", "{ECA5125B-5702-4C81-8575-3FAED2A189B9}"
+	ProjectSection(SolutionItems) = preProject
+		ArenaDeBatalha.GUI\Micro5-Regular.ttf = ArenaDeBatalha.GUI\Micro5-Regular.ttf
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F825982B-C9F3-4151-AB22-955DC42FEBBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F825982B-C9F3-4151-AB22-955DC42FEBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F825982B-C9F3-4151-AB22-955DC42FEBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F825982B-C9F3-4151-AB22-955DC42FEBBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5E13B9-363B-4847-913E-5EE77E96E642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5E13B9-363B-4847-913E-5EE77E96E642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5E13B9-363B-4847-913E-5EE77E96E642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5E13B9-363B-4847-913E-5EE77E96E642}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0A94CB2A-5856-4F4F-BB55-490BDD7CD8E7}
+	EndGlobalSection
+EndGlobal
