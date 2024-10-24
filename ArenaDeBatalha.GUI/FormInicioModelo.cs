@@ -16,6 +16,11 @@ namespace ArenaDeBatalha.GUI
         public FormInicioModelo()
         {
             InitializeComponent();
+
+            richTextBox1.BackColor = Color.Transparent;
+            richTextBox1.BorderStyle = BorderStyle.None;
+            richTextBox1.ReadOnly = false;
+            richTextBox1.TabStop = false;
         }
 
         private void retornar_Click(object sender, EventArgs e)
@@ -41,6 +46,11 @@ namespace ArenaDeBatalha.GUI
             jogoForm.Show();
 
             LimiteDePontuacao.LimitePontuacao = 0;
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
