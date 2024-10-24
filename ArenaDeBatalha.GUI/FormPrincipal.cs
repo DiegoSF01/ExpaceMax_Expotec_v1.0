@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Drawing.Text;
+using System.Security.Policy;
 //adicionar referência para os assemblies WindowsBase.dll e Presentation.Core
 
 namespace ArenaDeBatalha.GUI
@@ -20,13 +21,13 @@ namespace ArenaDeBatalha.GUI
         private void LoadCustomFont()
         {
             // Adicione o caminho da fonte
-            privateFonts.AddFontFile(@"C:\Users\Usuario\source\repos\ArenaDeBatalha\font\Micro5-Regular.ttf");
+            privateFonts.AddFontFile(@"C:\Users\Josie\source\repos\ExpaceMax_Expotec_v1.0\font\Micro5-Regular.ttf");
             score.Font = new Font(privateFonts.Families[0], 35, FontStyle.Regular);
         }
-
         DispatcherTimer gameLoopTimer { get; set; }
         DispatcherTimer enemySpawnTimer { get; set; }
         bool gameIsOver { get; set; }
+        bool vitoriaIsOver { get; set; }
         bool canShoot { get; set; }
         Random random { get; set; }
         Graphics screen { get; set; }
@@ -34,6 +35,7 @@ namespace ArenaDeBatalha.GUI
         Background background { get; set; }
         Player player { get; set; }
         GameOver gameOver { get; set; }
+        Vitoria vitoria { get; set; }
         List<GameObject> gameObjects { get; set; }
 
         public FormPrincipal()
@@ -42,12 +44,13 @@ namespace ArenaDeBatalha.GUI
             LoadCustomFont();
 
             float scaleX = Screen.PrimaryScreen.WorkingArea.Width / 1920.0F;
-            this.ClientSize = new Size((int)(775 / scaleX), (int)(572 / scaleX));            
+            this.ClientSize = new Size((int)(517 / scaleX), (int)(382 / scaleX));            
             this.screenBuffer = new Bitmap(Media.Background.Width, Media.Background.Height);
             this.screen = Graphics.FromImage(this.screenBuffer);
             this.background = new Background(this.screenBuffer.Size, this.screen);
             this.player = new Player(this.screenBuffer.Size, this.screen, gameObjects);
             this.gameOver = new GameOver(this.screenBuffer.Size, this.screen);
+            this.vitoria = new Vitoria(this.screenBuffer.Size, this.screen);
             this.gameObjects = new List<GameObject>();
             this.gameObjects.Add(background);
             this.gameObjects.Add(player);
@@ -59,6 +62,7 @@ namespace ArenaDeBatalha.GUI
         {
             this.random = new Random();
             this.gameIsOver = false;
+            this.vitoriaIsOver = false;
             this.gameObjects.Clear();
             this.gameObjects.Add(background);
             this.gameObjects.Add(player);
@@ -87,6 +91,12 @@ namespace ArenaDeBatalha.GUI
             if (gameIsOver)
             {
                 EndGame();
+                return;
+            }
+
+            if (vitoriaIsOver)
+            {
+                EndGameVi();
                 return;
             }
 
@@ -122,13 +132,29 @@ namespace ArenaDeBatalha.GUI
                             goB.Destroy();
 
                             ControladorPontuacao.Pontuacao += 10;
+                            LimiteDePontuacao.LimitePontuacao -= 10;
                             score.Text = ControladorPontuacao.Pontuacao.ToString();
+
+                            if (LimiteDePontuacao.LimitePontuacao == 0)
+                            {
+                                vitoriaIsOver = true;
+                            }
                         }
                     }
                 }                
             }
 
             this.Invalidate();
+        }
+
+        private void EndGameVi()
+        {
+            this.gameObjects.RemoveAll(x => !(x is Background));
+            this.gameLoopTimer.Stop();
+            this.enemySpawnTimer.Stop();
+            this.background.UpdateObject();
+            this.vitoria.UpdateObject();
+            Invalidate();
         }
 
         private void EndGame()
@@ -178,7 +204,6 @@ namespace ArenaDeBatalha.GUI
 
         private void FormPrincipal_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

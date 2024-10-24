@@ -12,6 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "font", "font", "{ECA5125B-5
 		ArenaDeBatalha.GUI\Micro5-Regular.ttf = ArenaDeBatalha.GUI\Micro5-Regular.ttf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{BC309EA3-27EA-47BD-B425-8B70B6229213}"
+	ProjectSection(SolutionItems) = preProject
+		D:\d\d2\Desktop\Vitoria.png = D:\d\d2\Desktop\Vitoria.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

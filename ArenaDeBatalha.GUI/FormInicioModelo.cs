@@ -30,6 +30,17 @@ namespace ArenaDeBatalha.GUI
             this.Hide();
             var jogoForm = new FormPrincipal();
             jogoForm.Show();
+
+            LimiteDePontuacao.LimitePontuacao = 50;
+        }
+
+        private void competitive_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var jogoForm = new FormPrincipal();
+            jogoForm.Show();
+
+            LimiteDePontuacao.LimitePontuacao = 0;
         }
     }
 }

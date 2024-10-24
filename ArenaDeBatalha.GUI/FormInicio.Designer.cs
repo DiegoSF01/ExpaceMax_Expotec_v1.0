@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInicio));
             this.exit = new System.Windows.Forms.PictureBox();
             this.classification = new System.Windows.Forms.PictureBox();
             this.play = new System.Windows.Forms.PictureBox();
@@ -39,7 +40,7 @@
             // exit
             // 
             this.exit.BackColor = System.Drawing.Color.Transparent;
-            this.exit.Image = global::ArenaDeBatalha.GUI.Properties.Resources.PLAYo_removebg_preview;
+            this.exit.Image = ((System.Drawing.Image)(resources.GetObject("exit.Image")));
             this.exit.Location = new System.Drawing.Point(230, 311);
             this.exit.Name = "exit";
             this.exit.Size = new System.Drawing.Size(285, 99);
@@ -52,8 +53,8 @@
             // 
             this.classification.BackColor = System.Drawing.Color.Transparent;
             this.classification.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.classification.Image = global::ArenaDeBatalha.GUI.Properties.Resources.PLAYo__3__removebg_preview;
-            this.classification.Location = new System.Drawing.Point(135, 172);
+            this.classification.Image = ((System.Drawing.Image)(resources.GetObject("classification.Image")));
+            this.classification.Location = new System.Drawing.Point(131, 189);
             this.classification.Name = "classification";
             this.classification.Size = new System.Drawing.Size(499, 99);
             this.classification.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -63,7 +64,7 @@
             // play
             // 
             this.play.BackColor = System.Drawing.Color.Transparent;
-            this.play.Image = global::ArenaDeBatalha.GUI.Properties.Resources.play_removebg_preview;
+            this.play.Image = ((System.Drawing.Image)(resources.GetObject("play.Image")));
             this.play.Location = new System.Drawing.Point(230, 37);
             this.play.Name = "play";
             this.play.Size = new System.Drawing.Size(285, 99);
@@ -82,6 +83,8 @@
             this.Controls.Add(this.play);
             this.Controls.Add(this.classification);
             this.Controls.Add(this.exit);
+            this.DoubleBuffered = true;
+            this.MinimizeBox = false;
             this.Name = "FormInicio";
             this.Text = "ExpaceMax";
             this.Load += new System.EventHandler(this.FormInicio_Load);

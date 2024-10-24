@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Media;
 
@@ -14,7 +15,17 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         public Size Bounds { get; set; }
         public Graphics Screen { get; set; }
         public Rectangle Rectangle { get; set; }
-        public int Width { get { return this.Sprite.Width; } }
+        public int Width
+        {
+            get
+            {
+                if (this.Sprite == null)
+                {
+                    throw new InvalidOperationException("Sprite não foi inicializado.");
+                }
+                return this.Sprite.Width;
+            }
+        }
         public int Height { get { return this.Sprite.Height; } }
         public Stream Sound { get; set; }
         
