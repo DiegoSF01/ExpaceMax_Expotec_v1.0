@@ -60,6 +60,7 @@
             this.classification.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.classification.TabIndex = 2;
             this.classification.TabStop = false;
+            this.classification.Click += new System.EventHandler(this.classification_Click);
             // 
             // play
             // 
@@ -77,13 +78,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::ArenaDeBatalha.GUI.Properties.Resources.fundo1;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.play);
             this.Controls.Add(this.classification);
             this.Controls.Add(this.exit);
             this.DoubleBuffered = true;
+            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormInicio";
             this.Text = "ExpaceMax";

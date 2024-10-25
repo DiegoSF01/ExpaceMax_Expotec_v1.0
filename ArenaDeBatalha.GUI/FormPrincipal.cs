@@ -11,6 +11,9 @@ using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Drawing.Text;
 using System.Security.Policy;
+using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
+
 //adicionar referência para os assemblies WindowsBase.dll e Presentation.Core
 
 namespace ArenaDeBatalha.GUI
@@ -37,11 +40,17 @@ namespace ArenaDeBatalha.GUI
         GameOver gameOver { get; set; }
         Vitoria vitoria { get; set; }
         List<GameObject> gameObjects { get; set; }
+        public string NomeJogador { get; set; }
+        public int Pontuacao { get; set; }
+
+        private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=Ga22Di01Ju23#;";
+        private MySqlConnection conexao;
 
         public FormPrincipal()
         {
             InitializeComponent();
             LoadCustomFont();
+            ConectarBanco();
 
             float scaleX = Screen.PrimaryScreen.WorkingArea.Width / 1920.0F;
             this.ClientSize = new Size((int)(517 / scaleX), (int)(382 / scaleX));            
@@ -57,8 +66,30 @@ namespace ArenaDeBatalha.GUI
             StartGame();
         }
 
+        private void ConectarBanco()
+        {
+            try
+            {
+                conexao = new MySqlConnection(connectionString);
+                conexao.Open();
+                MessageBox.Show("Conectado ao banco com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar: " + ex.Message);
+            }
+        }
 
-        public void StartGame()
+        // Fechar a conexão ao sair do formulário
+        private void Formprincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (conexao != null)
+            {
+                conexao.Close();
+            }
+        }
+
+    public void StartGame()
         {
             this.random = new Random();
             this.gameIsOver = false;
@@ -159,12 +190,29 @@ namespace ArenaDeBatalha.GUI
 
         private void EndGame()
         {
+            int pontuacao = ControladorPontuacao.Pontuacao;
+            InserirPontuacao(NomeJogador, pontuacao);
+
             this.gameObjects.RemoveAll(x => !(x is Background));
             this.gameLoopTimer.Stop();
             this.enemySpawnTimer.Stop();
             this.background.UpdateObject();
             this.gameOver.UpdateObject();
             Invalidate();
+        }
+
+        private void InserirPontuacao(string nome, int pontuacao)
+        {
+            using (MySqlConnection conexao = new BancoDeDados().AbrirConexao())
+            {
+                string query = "INSERT INTO classificacao (nome, pontuacao) VALUES (@nome, @pontuacao)";
+                using (MySqlCommand comando = new MySqlCommand(query, conexao))
+                {
+                    comando.Parameters.AddWithValue("@nome", nome);
+                    comando.Parameters.AddWithValue("@pontuacao", pontuacao);
+                    comando.ExecuteNonQuery();
+                }
+            }
         }
 
         private void ProcessControls()

@@ -37,5 +37,12 @@ namespace ArenaDeBatalha.GUI
         {
             Application.Exit();
         }
+
+        private void classification_Click(object sender, EventArgs e)
+        {
+            this.Hide(); // Esconde a tela de início
+            var jogoForm = new FormClassificacao();
+            jogoForm.Show();
+        }
     }
 }
