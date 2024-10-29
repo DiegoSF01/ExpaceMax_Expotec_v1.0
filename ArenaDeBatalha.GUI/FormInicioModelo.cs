@@ -31,7 +31,7 @@ namespace ArenaDeBatalha.GUI
             jogoForm.Show();
             this.Hide();
 
-            LimiteDePontuacao.LimitePontuacao = 50;
+            LimiteDePontuacao.LimitePontuacao = 2000;
         }
 
         private void competitive_Click(object sender, EventArgs e)

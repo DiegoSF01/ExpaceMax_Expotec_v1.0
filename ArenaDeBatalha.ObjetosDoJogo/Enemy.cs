@@ -10,7 +10,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         {
             if (ControladorPontuacao.Pontuacao % 250 == 0 && ControladorPontuacao.Pontuacao != 0)
             {
-                speed += 5;
+                speed += 1;
             }
             this.Left = position.X;
             this.Top = position.Y;
@@ -27,6 +27,11 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         {
             this.MoveDown();
             base.UpdateObject();
+        }
+
+        public static void ResetSpeed()
+        {
+            speed = 5;
         }
     }
 }

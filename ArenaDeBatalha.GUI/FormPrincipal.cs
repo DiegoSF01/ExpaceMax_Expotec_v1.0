@@ -28,8 +28,6 @@ namespace ArenaDeBatalha.GUI
             score.Font = new Font(privateFonts.Families[0], 35, FontStyle.Regular);
         }
 
-        int pontuacao = ControladorPontuacao.Pontuacao;
-
         DispatcherTimer gameLoopTimer { get; set; }
         DispatcherTimer enemySpawnTimer { get; set; }
         bool gameIsOver { get; set; }
@@ -46,8 +44,10 @@ namespace ArenaDeBatalha.GUI
         public string NomeJogador { get; set; }
         public int Pontuacao { get; set; }
 
-        private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;";
+        private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;Port=3307;";
         private MySqlConnection conexao;
+
+        private Timer pausaTimer;
 
         public FormPrincipal()
         {
@@ -55,8 +55,12 @@ namespace ArenaDeBatalha.GUI
             LoadCustomFont();
             ConectarBanco();
 
+            pausaTimer = new Timer();
+            pausaTimer.Interval = 1500;
+            pausaTimer.Tick += PausaTimer_Tick;
+
             float scaleX = Screen.PrimaryScreen.WorkingArea.Width / 1920.0F;
-            this.ClientSize = new Size((int)(775 / scaleX), (int)(572 / scaleX));            
+            this.ClientSize = new Size((int)(775 / scaleX), (int)(572 / scaleX));
             this.screenBuffer = new Bitmap(Media.Background.Width, Media.Background.Height);
             this.screen = Graphics.FromImage(this.screenBuffer);
             this.background = new Background(this.screenBuffer.Size, this.screen);
@@ -66,6 +70,7 @@ namespace ArenaDeBatalha.GUI
             this.gameObjects = new List<GameObject>();
             this.gameObjects.Add(background);
             this.gameObjects.Add(player);
+            
             StartGame();
         }
 
@@ -92,7 +97,7 @@ namespace ArenaDeBatalha.GUI
             }
         }
 
-    public void StartGame()
+        public void StartGame()
         {
             this.random = new Random();
             this.gameIsOver = false;
@@ -136,8 +141,8 @@ namespace ArenaDeBatalha.GUI
 
             this.gameObjects.RemoveAll(x => !x.Active);
 
-            this.ProcessControls();            
-                        
+            this.ProcessControls();
+
             foreach (GameObject goA in this.gameObjects)
             {
                 goA.UpdateObject();
@@ -153,8 +158,8 @@ namespace ArenaDeBatalha.GUI
                     if (gameIsOver) return;
 
                     if (goA.IsCollidingWith(player))
-                    {                        
-                        gameIsOver = true;                        
+                    {
+                        gameIsOver = true;
                         return;
                     }
 
@@ -172,10 +177,11 @@ namespace ArenaDeBatalha.GUI
                             if (LimiteDePontuacao.LimitePontuacao == 0)
                             {
                                 vitoriaIsOver = true;
+                                ControladorPontuacao.Pontuacao = 0;
                             }
                         }
                     }
-                }                
+                }
             }
 
             this.Invalidate();
@@ -189,41 +195,77 @@ namespace ArenaDeBatalha.GUI
             this.background.UpdateObject();
             this.vitoria.UpdateObject();
             Invalidate();
+
+            pausaTimer.Start();
+
+            ControladorPontuacao.Pontuacao = 0;
+            Enemy.ResetSpeed();
         }
 
         private void EndGame()
         {
-            if (!string.IsNullOrEmpty(NomeJogador))
-            {
-                InserirPontuacao(NomeJogador, pontuacao);
-
-                // Exibir classificação após o jogo
-                FormClassificacao formClassificacao = new FormClassificacao();
-                formClassificacao.Show();
-                this.Hide();
-            }
-
             this.gameObjects.RemoveAll(x => !(x is Background));
             this.gameLoopTimer.Stop();
             this.enemySpawnTimer.Stop();
             this.background.UpdateObject();
             this.gameOver.UpdateObject();
             Invalidate();
+
+            if (!string.IsNullOrEmpty(NomeJogador))
+            {
+                int pontuacao = ControladorPontuacao.Pontuacao;
+
+                InserirPontuacao(NomeJogador, pontuacao);
+            }
+
+            pausaTimer.Start();
+
+            ControladorPontuacao.Pontuacao = 0;
+            Enemy.ResetSpeed();
         }
 
-        private void InserirPontuacao(string NomeJogador, int pontuacao)
+        private void InserirPontuacao(string nome, int pontuacao)
         {
             using (MySqlConnection conexao = new BancoDeDados().AbrirConexao())
             {
-                string query = "INSERT INTO classificacao (nome, pontuacao) VALUES (@nome, @pontuacao)";
+                // Verifica se já existe uma pontuação para o jogador
+                string query = "SELECT pontuacao FROM classificacao WHERE nome = @nome";
                 using (MySqlCommand comando = new MySqlCommand(query, conexao))
                 {
-                    comando.Parameters.AddWithValue("@nome", NomeJogador);
-                    comando.Parameters.AddWithValue("@pontuacao", pontuacao);
-                    comando.ExecuteNonQuery();
+                    comando.Parameters.AddWithValue("@nome", nome);
+                    var resultado = comando.ExecuteScalar();
+
+                    if (resultado != null)
+                    {
+                        // Se existe, compara as pontuações
+                        int pontuacaoExistente = Convert.ToInt32(resultado);
+                        if (pontuacao > pontuacaoExistente)
+                        {
+                            // Se a nova pontuação for maior, atualiza
+                            string updateQuery = "UPDATE classificacao SET pontuacao = @pontuacao WHERE nome = @nome";
+                            using (MySqlCommand updateCommand = new MySqlCommand(updateQuery, conexao))
+                            {
+                                updateCommand.Parameters.AddWithValue("@pontuacao", pontuacao);
+                                updateCommand.Parameters.AddWithValue("@nome", nome);
+                                updateCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Se não existe, insere uma nova entrada
+                        string insertQuery = "INSERT INTO classificacao (nome, pontuacao) VALUES (@nome, @pontuacao)";
+                        using (MySqlCommand insertCommand = new MySqlCommand(insertQuery, conexao))
+                        {
+                            insertCommand.Parameters.AddWithValue("@nome", nome);
+                            insertCommand.Parameters.AddWithValue("@pontuacao", pontuacao);
+                            insertCommand.ExecuteNonQuery();
+                        }
+                    }
                 }
             }
         }
+
 
         private void ProcessControls()
         {
@@ -258,6 +300,17 @@ namespace ArenaDeBatalha.GUI
             {
                 this.StartGame();
             }
+        }
+
+        private void PausaTimer_Tick(object sender, EventArgs e)
+        {
+            // Para o timer
+            pausaTimer.Stop();
+
+            // Exibir a classificação após o tempo de pausa
+            FormInicio formInicio = new FormInicio();
+            formInicio.Show();
+            this.Hide(); // Oculta o formulário atual
         }
 
         private void FormPrincipal_Load(object sender, EventArgs e)

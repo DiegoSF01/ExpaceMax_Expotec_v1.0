@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace ArenaDeBatalha.GUI
@@ -42,6 +43,13 @@ namespace ArenaDeBatalha.GUI
                 }
             }
             return ranking;
+        }
+
+        private void retornar_Click(object sender, System.EventArgs e)
+        {
+            var jogoForm = new FormInicio();
+            jogoForm.Show();
+            this.Hide();
         }
     }
 }

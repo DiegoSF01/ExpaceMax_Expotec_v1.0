@@ -1,9 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 
 public class BancoDeDados
 {
-    private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;";
+    private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;Port=3307;";
 
     // Método para abrir a conexão
     public MySqlConnection AbrirConexao()
@@ -22,3 +24,4 @@ public class BancoDeDados
         }
     }
 }
+
