@@ -200,6 +200,8 @@ namespace ArenaDeBatalha.GUI
 
             ControladorPontuacao.Pontuacao = 0;
             Enemy.ResetSpeed();
+            Player.ResetSpeed();
+            Bullet.ResetSpeed();
         }
 
         private void EndGame()
@@ -222,6 +224,9 @@ namespace ArenaDeBatalha.GUI
 
             ControladorPontuacao.Pontuacao = 0;
             Enemy.ResetSpeed();
+            Enemy.ResetSpeed();
+            Player.ResetSpeed();
+            Bullet.ResetSpeed();
         }
 
         private void InserirPontuacao(string nome, int pontuacao)

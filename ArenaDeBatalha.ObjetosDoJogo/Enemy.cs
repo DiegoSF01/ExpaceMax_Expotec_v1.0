@@ -5,7 +5,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
 {
     public class Enemy : GameObject
     {
-        static int speed = 5;
+        static int speed = 3;
         public Enemy(Size bounds, Graphics graphics, Point position) : base(bounds, graphics)
         {
             if (ControladorPontuacao.Pontuacao % 250 == 0 && ControladorPontuacao.Pontuacao != 0)
@@ -31,7 +31,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
 
         public static void ResetSpeed()
         {
-            speed = 5;
+            speed = 3;
         }
     }
 }

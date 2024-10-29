@@ -8,11 +8,17 @@ namespace ArenaDeBatalha.ObjetosDoJogo
     {
         List<GameObject> gameObjects;
 
+        static int speed = 6;
+
         public Player(Size bounds, Graphics graphics, List<GameObject> gameObjects) : base(bounds, graphics)
         {
+            if (ControladorPontuacao.Pontuacao % 500 == 0 && ControladorPontuacao.Pontuacao != 0)
+            {
+                speed += 1;
+            }
             SetStartPosition();
             this.gameObjects = gameObjects;
-            this.Speed = 10;
+            this.Speed = speed;
             this.Sound = Media.ExplosionLong;
         }
 
@@ -49,6 +55,11 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         {
             if (this.Top > 0)
                 this.Top -= this.Speed;
+        }
+
+        public static void ResetSpeed()
+        {
+            speed = 6;
         }
     }
 }
