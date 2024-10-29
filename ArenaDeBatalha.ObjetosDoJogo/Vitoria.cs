@@ -13,7 +13,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         }
         public override Bitmap GetSprite()
         {
-            return new Bitmap(@"C:\Users\Josie\source\repos\ExpaceMax_Expotec_v1.0\img\Vitoria.png");
+            return new Bitmap(@"C:\Users\Usuario\source\repos\ExpaceMax_Expotec_v1.0\img\Vitoria.png");
         }
     }
 }

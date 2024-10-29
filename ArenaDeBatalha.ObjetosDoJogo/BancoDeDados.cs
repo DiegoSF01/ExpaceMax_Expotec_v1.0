@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 public class BancoDeDados
 {
-    private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=Ga22Di01Ju23#;";
+    private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;";
 
     // Método para abrir a conexão
     public MySqlConnection AbrirConexao()

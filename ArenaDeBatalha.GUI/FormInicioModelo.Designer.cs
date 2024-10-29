@@ -33,7 +33,7 @@
             this.competitive = new System.Windows.Forms.PictureBox();
             this.retornar = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtNome = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.friendly)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.competitive)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.retornar)).BeginInit();
@@ -91,13 +91,13 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // txtNome
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 57F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(386, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(382, 94);
-            this.textBox1.TabIndex = 7;
+            this.txtNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 57F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNome.Location = new System.Drawing.Point(386, 30);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(382, 94);
+            this.txtNome.TabIndex = 7;
             // 
             // FormInicioModelo
             // 
@@ -106,7 +106,7 @@
             this.BackgroundImage = global::ArenaDeBatalha.GUI.Properties.Resources.fundo1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtNome);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.retornar);
             this.Controls.Add(this.competitive);
@@ -131,6 +131,6 @@
         private System.Windows.Forms.PictureBox competitive;
         private System.Windows.Forms.PictureBox retornar;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNome;
     }
 }

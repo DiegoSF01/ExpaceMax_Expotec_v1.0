@@ -28,9 +28,9 @@ namespace ArenaDeBatalha.GUI
 
         private void play_Click_1(object sender, EventArgs e)
         {
-            this.Hide(); // Esconde a tela de início
-            var jogoForm = new FormInicioModelo();
-            jogoForm.Show();
+            FormInicioModelo inicioModelo = new FormInicioModelo();
+            inicioModelo.Show();
+            this.Hide();
         }
 
         private void exit_Click(object sender, EventArgs e)
@@ -40,9 +40,9 @@ namespace ArenaDeBatalha.GUI
 
         private void classification_Click(object sender, EventArgs e)
         {
-            this.Hide(); // Esconde a tela de início
             var jogoForm = new FormClassificacao();
             jogoForm.Show();
+            this.Hide();
         }
     }
 }

@@ -24,9 +24,12 @@ namespace ArenaDeBatalha.GUI
         private void LoadCustomFont()
         {
             // Adicione o caminho da fonte
-            privateFonts.AddFontFile(@"C:\Users\Josie\source\repos\ExpaceMax_Expotec_v1.0\font\Micro5-Regular.ttf");
+            privateFonts.AddFontFile(@"C:\Users\Usuario\source\repos\ExpaceMax_Expotec_v1.0\font\Micro5-Regular.ttf");
             score.Font = new Font(privateFonts.Families[0], 35, FontStyle.Regular);
         }
+
+        int pontuacao = ControladorPontuacao.Pontuacao;
+
         DispatcherTimer gameLoopTimer { get; set; }
         DispatcherTimer enemySpawnTimer { get; set; }
         bool gameIsOver { get; set; }
@@ -43,7 +46,7 @@ namespace ArenaDeBatalha.GUI
         public string NomeJogador { get; set; }
         public int Pontuacao { get; set; }
 
-        private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=Ga22Di01Ju23#;";
+        private string connectionString = "Server=localhost;Database=ranking_jogo;Uid=root;Pwd=etecjau;";
         private MySqlConnection conexao;
 
         public FormPrincipal()
@@ -53,7 +56,7 @@ namespace ArenaDeBatalha.GUI
             ConectarBanco();
 
             float scaleX = Screen.PrimaryScreen.WorkingArea.Width / 1920.0F;
-            this.ClientSize = new Size((int)(517 / scaleX), (int)(382 / scaleX));            
+            this.ClientSize = new Size((int)(775 / scaleX), (int)(572 / scaleX));            
             this.screenBuffer = new Bitmap(Media.Background.Width, Media.Background.Height);
             this.screen = Graphics.FromImage(this.screenBuffer);
             this.background = new Background(this.screenBuffer.Size, this.screen);
@@ -190,8 +193,15 @@ namespace ArenaDeBatalha.GUI
 
         private void EndGame()
         {
-            int pontuacao = ControladorPontuacao.Pontuacao;
-            InserirPontuacao(NomeJogador, pontuacao);
+            if (!string.IsNullOrEmpty(NomeJogador))
+            {
+                InserirPontuacao(NomeJogador, pontuacao);
+
+                // Exibir classificação após o jogo
+                FormClassificacao formClassificacao = new FormClassificacao();
+                formClassificacao.Show();
+                this.Hide();
+            }
 
             this.gameObjects.RemoveAll(x => !(x is Background));
             this.gameLoopTimer.Stop();
@@ -201,14 +211,14 @@ namespace ArenaDeBatalha.GUI
             Invalidate();
         }
 
-        private void InserirPontuacao(string nome, int pontuacao)
+        private void InserirPontuacao(string NomeJogador, int pontuacao)
         {
             using (MySqlConnection conexao = new BancoDeDados().AbrirConexao())
             {
                 string query = "INSERT INTO classificacao (nome, pontuacao) VALUES (@nome, @pontuacao)";
                 using (MySqlCommand comando = new MySqlCommand(query, conexao))
                 {
-                    comando.Parameters.AddWithValue("@nome", nome);
+                    comando.Parameters.AddWithValue("@nome", NomeJogador);
                     comando.Parameters.AddWithValue("@pontuacao", pontuacao);
                     comando.ExecuteNonQuery();
                 }
