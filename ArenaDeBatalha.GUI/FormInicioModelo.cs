@@ -25,7 +25,7 @@ namespace ArenaDeBatalha.GUI
             this.Hide();
         }
 
-        private void friendly_Click(object sender, EventArgs e)
+        private void FRIENDLY_Click(object sender, EventArgs e)
         {
             var jogoForm = new FormPrincipal();
             jogoForm.Show();
@@ -34,14 +34,21 @@ namespace ArenaDeBatalha.GUI
             LimiteDePontuacao.LimitePontuacao = 2000;
         }
 
-        private void competitive_Click(object sender, EventArgs e)
+        private void COMPETITIVE_Click_1(object sender, EventArgs e)
         {
-            FormPrincipal jogo  = new FormPrincipal();
+            FormPrincipal jogo = new FormPrincipal();
             jogo.NomeJogador = txtNome.Text;
             jogo.Show();
             this.Hide();
 
             LimiteDePontuacao.LimitePontuacao = 0;
+        }
+
+        private void RETURN_Click(object sender, EventArgs e)
+        {
+            var jogoForm = new FormInicio();
+            jogoForm.Show();
+            this.Hide();
         }
     }
 }

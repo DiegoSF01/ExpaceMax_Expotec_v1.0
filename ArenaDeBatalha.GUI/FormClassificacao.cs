@@ -45,7 +45,7 @@ namespace ArenaDeBatalha.GUI
             return ranking;
         }
 
-        private void retornar_Click(object sender, System.EventArgs e)
+        private void button1_Click(object sender, System.EventArgs e)
         {
             var jogoForm = new FormInicio();
             jogoForm.Show();

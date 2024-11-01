@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,9 @@ namespace ArenaDeBatalha.GUI
         public FormInicio()
         {
             InitializeComponent();
+
+            BancoDeDados bancoDeDados = new BancoDeDados();
+            bancoDeDados.InicializarBancoDeDados();
         }
 
         private void FormInicio_Load(object sender, EventArgs e)
@@ -23,26 +27,25 @@ namespace ArenaDeBatalha.GUI
             {
                 this.ClientSize = this.BackgroundImage.Size;
             }
-
         }
 
-        private void play_Click_1(object sender, EventArgs e)
+        private void CLASSIFICACAO_Click_1(object sender, EventArgs e)
+        {
+            var jogoForm = new FormClassificacao();
+            jogoForm.Show();
+            this.Hide();
+        }
+
+        private void PLAY_Click_1(object sender, EventArgs e)
         {
             FormInicioModelo inicioModelo = new FormInicioModelo();
             inicioModelo.Show();
             this.Hide();
         }
 
-        private void exit_Click(object sender, EventArgs e)
+        private void EXIT_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void classification_Click(object sender, EventArgs e)
-        {
-            var jogoForm = new FormClassificacao();
-            jogoForm.Show();
-            this.Hide();
         }
     }
 }
