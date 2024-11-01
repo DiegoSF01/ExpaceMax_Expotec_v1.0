@@ -1,88 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Crmf;
 
-namespace _231465
+public class BancoDeDados
 {
-    public class Banco
+    private string connectionString = "Server=localhost;Uid=root;Pwd=etecjau;Port=3307;";
+
+    // Método para abrir a conexão
+    public MySqlConnection AbrirConexao()
     {
-        //criando variaveis para conexao e consulta serão usadas em todo o projeto
-        //connection responsavel pela conexao com o MySQl
-        public static MySqlConnection Conexao;
-        // Command  responsavel pelas instrucoes sql a serem executadas
-        public static MySqlCommand Comando;
-        // adapter responsavel por inserir dados em um datatable
-        public static MySqlDataAdapter Adaptador;
-        public static DataTable datTabela;
+        MySqlConnection conexao = new MySqlConnection(connectionString);
+        conexao.Open();
+        return conexao;
+    }
 
-        public static void AbrirConexao()
+    // Método para fechar a conexão (boas práticas)
+    public void FecharConexao(MySqlConnection conexao)
+    {
+        if (conexao != null && conexao.State == System.Data.ConnectionState.Open)
         {
-            try
-            {
-                Conexao = new MySqlConnection("server=localhost;port=3307;uid=root;pwd=etecjau");
+            conexao.Close();
+        }
+    }
 
-                //Abre a conexao com o banco de dados
-                Conexao.Open();
-            }
-            catch (Exception e)
+    // Método para criar automaticamente o banco e a tabela
+    public void InicializarBancoDeDados()
+    {
+        try
+        {
+            using (var conexao = AbrirConexao())
             {
-                MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string queryCriarBanco = @"
+                    CREATE DATABASE IF NOT EXISTS ranking_jogo;
+                    USE ranking_jogo;
+                    CREATE TABLE IF NOT EXISTS classificacao (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        nome VARCHAR(50) NOT NULL,
+                        pontuacao INT NOT NULL
+                    );
+                ";
+
+                using (MySqlCommand comando = new MySqlCommand(queryCriarBanco, conexao))
+                {
+                    comando.ExecuteNonQuery();
+                }
             }
         }
-
-        public static void FecharConexao()
+        catch (Exception ex)
         {
-            try
-            {
-                // fecha a conexao com o banco de dados
-                Conexao.Close();
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        public static void CriarBanco()
-        {
-            try
-            {
-                AbrirConexao();
-                //cria o banco
-                Comando = new MySqlCommand("CREATE DATABASE IF NOT EXISTS vendas; USE vendas", Conexao);
-                //executa a query no mysql (raio do workbench)
-                Comando.ExecuteNonQuery();
-
-                //cria atabela
-                Comando = new MySqlCommand("CREATE TABLE IF NOT EXISTS Cidades " +
-                                            "(id integer auto_increment primary key, " +
-                                            "nome char(40), " +
-                                            "uf char(02))", Conexao);
-                Comando.ExecuteNonQuery();
-
-                Comando = new MySqlCommand("CREATE TABLE IF NOT EXISTS Marcas " +
-                                            "(id integer auto_increment primary key, " +
-                                            "marca char(20))", Conexao);
-                Comando.ExecuteNonQuery();
-                Comando = new MySqlCommand("CREATE TABLE IF NOT EXISTS Categorias " +
-                                            "(id integer auto_increment primary key, " +
-                                            "categoria char(20))", Conexao);
-                Comando.ExecuteNonQuery();
-
-                //chama a funcao para fechar a conexao com o banco
-                FecharConexao();
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show($"Erro ao inicializar o banco de dados: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
