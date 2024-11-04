@@ -13,6 +13,7 @@ using System.Drawing.Text;
 using System.Security.Policy;
 using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
+using Org.BouncyCastle.Asn1.Cms;
 
 //adicionar referência para os assemblies WindowsBase.dll e Presentation.Core
 
@@ -67,6 +68,8 @@ namespace ArenaDeBatalha.GUI
             this.player = new Player(this.screenBuffer.Size, this.screen, gameObjects);
             this.gameOver = new GameOver(this.screenBuffer.Size, this.screen);
             this.vitoria = new Vitoria(this.screenBuffer.Size, this.screen);
+            vitoriaIsOver = false;
+            gameIsOver = false;
             this.gameObjects = new List<GameObject>();
             this.gameObjects.Add(background);
             this.gameObjects.Add(player);
@@ -80,7 +83,6 @@ namespace ArenaDeBatalha.GUI
             {
                 conexao = new MySqlConnection(connectionString);
                 conexao.Open();
-                MessageBox.Show("Conectado ao banco com sucesso!");
             }
             catch (Exception ex)
             {
@@ -170,9 +172,44 @@ namespace ArenaDeBatalha.GUI
                             goA.Destroy();
                             goB.Destroy();
 
-                            ControladorPontuacao.Pontuacao += 10;
                             LimiteDePontuacao.LimitePontuacao -= 10;
                             score.Text = ControladorPontuacao.Pontuacao.ToString();
+
+                            if (LimiteDePontuacao.LimitePontuacao > 0)
+                            {
+                                if (ControladorPontuacao.Pontuacao < 500)
+                                {
+                                    ControladorPontuacao.Pontuacao += 10;
+                                }
+                                else if (ControladorPontuacao.Pontuacao >= 500)
+                                {
+                                    ControladorPontuacao.Pontuacao += 20;
+                                }
+                                else if (ControladorPontuacao.Pontuacao >= 1000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 50;
+                                }
+                            }
+                            if (ControladorPontuacao.Pontuacao < 500)
+                            {
+                                ControladorPontuacao.Pontuacao += 10;
+                            }
+                            else if (ControladorPontuacao.Pontuacao >= 500)
+                            {
+                                ControladorPontuacao.Pontuacao += 50;
+                            }
+                            else if (ControladorPontuacao.Pontuacao >= 1000)
+                            {
+                                ControladorPontuacao.Pontuacao += 100;
+                            }
+                            else if (ControladorPontuacao.Pontuacao >= 2000)
+                            {
+                                ControladorPontuacao.Pontuacao += 150;
+                            }
+                            else if (ControladorPontuacao.Pontuacao > 500)
+                            {
+                                ControladorPontuacao.Pontuacao += 200;
+                            }
 
                             if (LimiteDePontuacao.LimitePontuacao == 0)
                             {
@@ -223,7 +260,6 @@ namespace ArenaDeBatalha.GUI
             pausaTimer.Start();
 
             ControladorPontuacao.Pontuacao = 0;
-            Enemy.ResetSpeed();
             Enemy.ResetSpeed();
             Player.ResetSpeed();
             Bullet.ResetSpeed();

@@ -52,11 +52,11 @@
             this.CLASSIFICACAO.BackColor = System.Drawing.Color.Indigo;
             this.CLASSIFICACAO.Font = new System.Drawing.Font("Bell MT", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CLASSIFICACAO.ForeColor = System.Drawing.Color.White;
-            this.CLASSIFICACAO.Location = new System.Drawing.Point(130, 185);
+            this.CLASSIFICACAO.Location = new System.Drawing.Point(232, 181);
             this.CLASSIFICACAO.Name = "CLASSIFICACAO";
-            this.CLASSIFICACAO.Size = new System.Drawing.Size(540, 80);
+            this.CLASSIFICACAO.Size = new System.Drawing.Size(337, 80);
             this.CLASSIFICACAO.TabIndex = 5;
-            this.CLASSIFICACAO.Text = "CLASSIFICAÇÃO";
+            this.CLASSIFICACAO.Text = "RANKING";
             this.CLASSIFICACAO.UseVisualStyleBackColor = false;
             this.CLASSIFICACAO.Click += new System.EventHandler(this.CLASSIFICACAO_Click_1);
             // 
