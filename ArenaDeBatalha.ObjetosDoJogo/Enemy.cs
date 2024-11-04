@@ -8,7 +8,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
         static int speed = 3;
         public Enemy(Size bounds, Graphics graphics, Point position) : base(bounds, graphics)
         {
-            if (ControladorPontuacao.Pontuacao % 250 == 0 && ControladorPontuacao.Pontuacao != 0)
+            if (ControladorPontuacao.Pontuacao % 500 == 0 && ControladorPontuacao.Pontuacao != 0)
             {
                 speed += 1;
             }

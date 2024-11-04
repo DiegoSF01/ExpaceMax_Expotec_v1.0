@@ -177,38 +177,49 @@ namespace ArenaDeBatalha.GUI
 
                             if (LimiteDePontuacao.LimitePontuacao > 0)
                             {
-                                if (ControladorPontuacao.Pontuacao < 500)
+                                if (ControladorPontuacao.Pontuacao >= 2500)
                                 {
-                                    ControladorPontuacao.Pontuacao += 10;
+                                    ControladorPontuacao.Pontuacao += 100;
+                                }
+                                if (ControladorPontuacao.Pontuacao >= 1000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 50;
                                 }
                                 else if (ControladorPontuacao.Pontuacao >= 500)
                                 {
                                     ControladorPontuacao.Pontuacao += 20;
                                 }
+                                else if (ControladorPontuacao.Pontuacao < 500)
+                                {
+                                    ControladorPontuacao.Pontuacao += 10;
+                                }
+                            }
+                            else
+                            {
+                                if (ControladorPontuacao.Pontuacao > 15000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 500;
+                                }
+                                else if (ControladorPontuacao.Pontuacao > 5000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 200;
+                                }
+                                else if (ControladorPontuacao.Pontuacao >= 2000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 150;
+                                }
                                 else if (ControladorPontuacao.Pontuacao >= 1000)
+                                {
+                                    ControladorPontuacao.Pontuacao += 100;
+                                }
+                                else if (ControladorPontuacao.Pontuacao >= 500)
                                 {
                                     ControladorPontuacao.Pontuacao += 50;
                                 }
-                            }
-                            if (ControladorPontuacao.Pontuacao < 500)
-                            {
-                                ControladorPontuacao.Pontuacao += 10;
-                            }
-                            else if (ControladorPontuacao.Pontuacao >= 500)
-                            {
-                                ControladorPontuacao.Pontuacao += 50;
-                            }
-                            else if (ControladorPontuacao.Pontuacao >= 1000)
-                            {
-                                ControladorPontuacao.Pontuacao += 100;
-                            }
-                            else if (ControladorPontuacao.Pontuacao >= 2000)
-                            {
-                                ControladorPontuacao.Pontuacao += 150;
-                            }
-                            else if (ControladorPontuacao.Pontuacao > 500)
-                            {
-                                ControladorPontuacao.Pontuacao += 200;
+                                else if (ControladorPontuacao.Pontuacao < 500)
+                                {
+                                    ControladorPontuacao.Pontuacao += 10;
+                                }
                             }
 
                             if (LimiteDePontuacao.LimitePontuacao == 0)

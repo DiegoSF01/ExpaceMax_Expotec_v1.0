@@ -12,7 +12,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
 
         public Player(Size bounds, Graphics graphics, List<GameObject> gameObjects) : base(bounds, graphics)
         {
-            if (ControladorPontuacao.Pontuacao % 500 == 0 && ControladorPontuacao.Pontuacao != 0)
+            if (ControladorPontuacao.Pontuacao % 1000 == 0 && ControladorPontuacao.Pontuacao != 0)
             {
                 speed += 1;
             }

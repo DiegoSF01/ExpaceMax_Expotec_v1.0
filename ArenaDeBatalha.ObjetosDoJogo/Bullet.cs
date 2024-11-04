@@ -8,7 +8,7 @@ namespace ArenaDeBatalha.ObjetosDoJogo
 
         public Bullet(Size bounds, Graphics graphics, Point position) : base(bounds, graphics)
         {
-            if (ControladorPontuacao.Pontuacao % 750 == 0 && ControladorPontuacao.Pontuacao != 0)
+            if (ControladorPontuacao.Pontuacao % 1500 == 0 && ControladorPontuacao.Pontuacao != 0)
             {
                 speed += 2;
             }
