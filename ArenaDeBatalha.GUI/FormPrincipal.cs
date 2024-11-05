@@ -204,10 +204,6 @@ namespace ArenaDeBatalha.GUI
                                 {
                                     ControladorPontuacao.Pontuacao += 200;
                                 }
-                                else if (ControladorPontuacao.Pontuacao >= 2000)
-                                {
-                                    ControladorPontuacao.Pontuacao += 150;
-                                }
                                 else if (ControladorPontuacao.Pontuacao >= 1000)
                                 {
                                     ControladorPontuacao.Pontuacao += 100;
