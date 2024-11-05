@@ -16,9 +16,6 @@ namespace ArenaDeBatalha.GUI
         public FormInicio()
         {
             InitializeComponent();
-
-            BancoDeDados bancoDeDados = new BancoDeDados();
-            bancoDeDados.InicializarBancoDeDados();
         }
 
         private void FormInicio_Load(object sender, EventArgs e)
