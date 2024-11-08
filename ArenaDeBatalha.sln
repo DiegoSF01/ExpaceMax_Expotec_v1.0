@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{BC309EA3-27E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{D8C89958-DC3A-4815-A91A-34E39BF53FEB}"
 	ProjectSection(SolutionItems) = preProject
-		sql\BancoDeDados.sql = sql\BancoDeDados.sql
+		D:\Diego\Bandodedados.sql = D:\Diego\Bandodedados.sql
 	EndProjectSection
 EndProject
 Global

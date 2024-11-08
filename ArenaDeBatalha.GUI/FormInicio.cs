@@ -20,11 +20,14 @@ namespace ArenaDeBatalha.GUI
 
         private void FormInicio_Load(object sender, EventArgs e)
         {
-
             if (this.BackgroundImage != null)
             {
                 this.ClientSize = this.BackgroundImage.Size;
             }
+
+            BancoDeDados banco = new BancoDeDados();
+            banco.ImportarBancoDeDados(@"C:\Users\Usuario\source\repos\ExpaceMax_Expotec_v1.0\sql\Bancodedados.sql");
+
         }
 
         private void CLASSIFICACAO_Click_1(object sender, EventArgs e)
