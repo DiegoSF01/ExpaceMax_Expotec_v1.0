@@ -1,69 +1,40 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.IO;
-using System.Windows.Forms;
+using System.Data.SqlClient;
 
-public class BancoDeDados
+class Program
 {
-    private string connectionString = "Server=localhost;Database=nome_do_banco;Uid=root;Pwd=etecjau;Port=3307;";
-
-    public MySqlConnection AbrirConexao()
+    static void Main()
     {
-        MySqlConnection conexao = new MySqlConnection(connectionString);
+        // Caminho para o arquivo .sql
+        string filePath = @"C:\caminho\para\seu\arquivo.sql";
 
-        try
-        {
-            conexao.Open();
-            return conexao;
-        }
-        catch (MySqlException ex)
-        {
-            MessageBox.Show("Erro ao abrir a conexão com o banco de dados: " + ex.Message);
-            return null;
-        }
-    }
+        // Lê o conteúdo do arquivo .sql
+        string sqlCommands = File.ReadAllText(filePath);
 
-    public void FecharConexao(MySqlConnection conexao)
-    {
-        if (conexao != null && conexao.State == System.Data.ConnectionState.Open)
+        // String de conexão com o banco de dados (ajuste conforme necessário)
+        string connectionString = "Server=seu_servidor;Database=seu_banco_de_dados;User Id=seu_usuario;Password=sua_senha;";
+
+        // Conectar ao banco de dados e executar os comandos SQL
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             try
             {
-                conexao.Close();
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro ao fechar a conexão com o banco de dados: " + ex.Message);
-            }
-        }
-    }
+                connection.Open();
 
-    public void ImportarBancoDeDados(string caminhoArquivoSql)
-    {
-        if (!File.Exists(caminhoArquivoSql))
-        {
-            MessageBox.Show("Arquivo SQL não encontrado.");
-            return;
-        }
-
-        try
-        {
-            using (MySqlConnection conexao = AbrirConexao())
-            {
-                if (conexao == null)
+                // Cria o comando SQL
+                using (SqlCommand command = new SqlCommand(sqlCommands, connection))
                 {
-                    return;
+                    // Executa os comandos
+                    command.ExecuteNonQuery();
                 }
 
-                string scriptSql = File.ReadAllText(caminhoArquivoSql);
-                MySqlCommand comando = new MySqlCommand(scriptSql, conexao);
-                comando.ExecuteNonQuery();
-                MessageBox.Show("Banco de dados importado com sucesso.");
+                Console.WriteLine("Comandos SQL executados com sucesso!");
             }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Erro ao importar o banco de dados: " + ex.Message);
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro: {ex.Message}");
+            }
         }
     }
 }
